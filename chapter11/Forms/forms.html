@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+
+	<head>
+		<meta charset=utf-8 />
+		<title>Text and Email Input Types</title>
+		<script src="scripts/modernizr-1.6.min.js"></script>
+	</head>
+
+	<body>
+		<form>
+			<input type="text" id="first-name" placeholder="Your First Name">
+		</form>
+		<script>
+			if(!Modernizr.input.placeholder) {
+				var input = document.getElementById('first-name');
+				input.onfocus = function() {
+					var text = this.placeholder || this.getAttribute('placeholder');
+					if(this.value == text) {
+						this.value = '';
+					}
+				}
+				input.onblur = function() {
+					if(this.value == '') {
+						this.value = this.placeholder || this.getAttribute('placeholder');
+					}
+				}
+				input.onblur();
+			}
+		</script>
+	</body>
+
+</html>

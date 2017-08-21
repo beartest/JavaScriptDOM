@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>Example</title>
+	</head>
+
+	<body>
+		<a href="javascript:popUp('https://github.com/beartest');">链接href中使用伪协议调用js函数，不满足平稳退化</a>
+		<br/>
+		<a href="#" onclick="popUp('https://github.com/beartest'); return false;">内嵌事件onclick中处理函数，href为#，不满足平稳退化</a>
+		<br/>
+		<a href="https://github.com/beartest" onclick="popUp(this.getAttribute('href')); return false;" class="popup">内嵌事件onclick中处理函数，href为对应url，满足平稳退化</a>
+		<br/>
+		<a href="https://github.com/beartest" onclick="popUp(this.href); return false;" class="popup">内嵌事件onclick中处理函数，href为对应url，满足平稳退化，传参简化</a>
+		<br/>
+		<a href="https://github.com/beartest" class="popup">分离JavaScript</a>
+		<script>
+			window.onload = prepareLinks;
+
+			function prepareLinks() {
+				if(!document.getElementsByTagName) return false;
+				var links = document.getElementsByTagName("a");
+				for(var i = 0; i < links.length; i++) {
+					if(links[i].getAttribute("class") == "popup") {
+						links[i].onclick = function() {
+							popUp(this.getAttribute("href"));
+							return false;
+						}
+					}
+				}
+			}
+
+			function popUp(winURL) {
+				window.open(winURL, "popup", "width=320,height=480");
+			}
+		</script>
+	</body>
+
+</html>
